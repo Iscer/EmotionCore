@@ -1,0 +1,36 @@
+﻿@model EmotionCore.Models.EmoEmotion
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EmoEmotion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Score)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Score)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EmotionType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmotionType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Face)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Face.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
