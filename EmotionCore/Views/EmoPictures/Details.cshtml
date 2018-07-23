@@ -23,8 +23,16 @@
             @Html.DisplayFor(model => model.Path)
         </dd>
     </dl>
+    
+
 </div>
-<div>
+<div class="row">
+    <div class="col-md-5 col-sm-offset-2">
+        <img src="~/@Model.Path" class=" img-thumbnail" />
+    </div>
+</div>
+
+<div class="" >
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

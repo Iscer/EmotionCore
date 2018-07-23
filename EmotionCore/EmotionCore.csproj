@@ -17,7 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Uploads\images\" />
+    <None Include="wwwroot\Uploads\images\492c86fe-7939-4815-96e3-1e308e724991.jpg" />
+    <None Include="wwwroot\Uploads\images\c6430b39-ab0a-4506-a690-9bb479846b68.jpg" />
+    <None Include="wwwroot\Uploads\images\d48d9832-ca41-49cd-8714-2b7da40b2d78.jpg" />
   </ItemGroup>
 
 </Project>

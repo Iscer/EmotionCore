@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using EmotionCore.Models;
 using EmotionCore.Util;
@@ -13,7 +14,9 @@ using Microsoft.Extensions.Options;
 
 namespace EmotionCore.Controllers
 {
-    public class FacesUploaderController : Controller
+    [Produces("application/json")]
+    [Route("api/FaceUploaderAPI")]
+    public class FaceUploaderAPIController : Controller
     {
         private readonly EmotionCoreContext _context;
         private FaceHelper faceHelper;
@@ -21,9 +24,8 @@ namespace EmotionCore.Controllers
         private string UPLOAD_DIR;
         private readonly IHostingEnvironment _environment;
 
-        public FacesUploaderController(EmotionCoreContext context, IOptions<AppSettings> settings, IHostingEnvironment environment)
+        public FaceUploaderAPIController(EmotionCoreContext context, IOptions<AppSettings> settings, IHostingEnvironment environment)
         {
-       
             _context = context;
             faceHelper = new FaceHelper(settings.Value.ApiKey, settings.Value.BaseUri);
             faceAttributes = new FaceAttributeType[]
@@ -34,14 +36,12 @@ namespace EmotionCore.Controllers
             this._environment = environment;
 
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         [HttpPost]
-        public async Task<IActionResult> Index(IFormFile file)
+        public async Task<IActionResult> PostEmoPictureUpload(IFormFile file)
         {
+
+
             if (file?.Length > 0)
             {
                 var pictureName = Guid.NewGuid().ToString();
@@ -53,7 +53,7 @@ namespace EmotionCore.Controllers
                 using (var stream = new FileStream(route, FileMode.Create))
                     await file.CopyToAsync(stream);
 
-       
+
 
                 using (Stream imageStream = file.OpenReadStream())
                 {
@@ -65,15 +65,19 @@ namespace EmotionCore.Controllers
                     _context.EmoPictures.Add(emoPicture);
                     await _context.SaveChangesAsync();
 
+    
 
-                    return RedirectToAction("Details", "EmoPictures", new { Id = emoPicture.Id});
+                    return CreatedAtAction("GetEmoPicture", "EmoPicturesAPI", new { id = emoPicture.Id }, emoPicture);
                 }
 
             }
 
-            return View();
-        }
+            return BadRequest();
 
+
+
+
+        }
 
 
     }

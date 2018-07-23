@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using EmotionCore.Models;
 using EmotionCore.Util;
+using Newtonsoft.Json;
 
 namespace EmotionCore
 {
@@ -24,13 +25,22 @@ namespace EmotionCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+                    options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 
+
+                });
+              
             services.AddDbContext<EmotionCoreContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EmotionCoreContext")));
 
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +63,7 @@ namespace EmotionCore
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=EmoPictures}/{action=Index}/{id?}");
+
             });
         }
     }

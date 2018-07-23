@@ -32,7 +32,7 @@ bld/
 #wwwroot/
 
 EmotionCore/wwwroot/images/
-EmotionCore/Uploads/images/
+EmotionCore/wwwroot/Uploads/images/
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
